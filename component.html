@@ -60,6 +60,7 @@
         this.updateChannels();
         this.nextBroadcast = this.activeBroadcasts[0];
         this.updateUI();
+        this.super();
       },
       updateUI : function(){
         Array.prototype.forEach.call(this.$.channels.querySelectorAll(".output-channel"), function(c) {
