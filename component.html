@@ -48,14 +48,14 @@
           this.broadcast("output", str1 + str2 );
           this.str1 = this.str2 = "";
         }
-      }
+      },
       string1: function( value ) {
         this.str1 = value;
         this.check();
       },
       string2: function( value ) {
-        this.isOpen = false;
-        this.updateUI();
+        this.str2 = value;
+        this.check();
       }
     });
   </script>
