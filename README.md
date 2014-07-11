@@ -1,4 +1,4 @@
 component-channel-gate
 ======================
 
-A brick for Mozilla Appmaker that takes an incoming signal and routes it to a channel selected by the app user.
+A brick for Mozilla Appmaker that passes on a signal if the gate is opened
