@@ -1,74 +1,61 @@
-<polymer-element name="ceci-boolean-gate" attributes="" extends="ceci-element">
+<polymer-element name="ceci-string-concat" attributes="" extends="ceci-element">
   <template>
     <link rel="stylesheet" href="component.css"></link>
-    <div id="state">OPEN</div>
+    <div id="concat"></div>
     <shadow></shadow>
   </template>
   <ceci-definition>
     {
-      "tags": ["boolean-gate", "low-level"],
+      "tags": ["string-concat", "low-level"],
       "thumbnail": "./thumbnail.png",
-      "name": "Boolean Gate",
-      "description": "Chooose which channel to send a signal through.",
+      "name": "String Concatenator",
+      "description": "Combine two string inputs and then output them",
       "broadcasts": {
-        "Out": {
+        "output": {
           "label": "Output",
-          "description": "Broadcasts the message, if allowed",
+          "description": "broadcasts input1 + input2",
           "default": "green"
         }
       },
       "listeners": {
-        "input": {
-          "description": "The input that is to be broadcast",
-          "label": "Input",
+        "string1": {
+          "description": "The first part of the string",
+          "label": "String 1",
           "default": true
         },
-        "open": {
-          "description": "Open the gate",
-          "label": "Open"
-        },
-        "close": {
-          "description": "Close the gate",
-          "label": "Close"
+        "string2": {
+          "description": "The second part of the string",
+          "label": "String 2",
+          "default": true
         }
       },
       "attributes": {}
     }
   </ceci-definition>
   <script>
-    Polymer('ceci-boolean-gate', {
-      isOpen: true,
+    Polymer('ceci-string-concat', {
+      this.str1 = "",
+      this.str2 = "",
       ready: function() {
         this.super();
-        this.isOpen = true;
       },
       attached: function(){
         var that = this;
-        this.addEventListener("channelUpdated",function(){
-          this.updateUI();
-        });
-        this.updateUI();
         this.super();
       },
-      updateUI: function(){
-        if(this.isOpen){
-          this.$.state.classList.remove("open");
-        } else {
-          this.$.state.classList.add("open");
+      check: function() {
+        if ( this.str1 && this.str2 ) {
+          this.broadcast("output", str1 + str2 );
+          this.str1 = this.str2 = "";
         }
+      }
+      string1: function( value ) {
+        this.str1 = value;
+        this.check();
       },
-      open: function() {
-        this.isOpen = true;
-        this.updateUI();
-      },
-      close: function() {
+      string2: function( value ) {
         this.isOpen = false;
         this.updateUI();
-      },
-      input:function(value) {
-        if ( this.isOpen ) {
-          this.broadcast("Out", value);
-        }
       }
     });
   </script>

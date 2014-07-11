@@ -20,13 +20,7 @@
   cursor: pointer;
 }
 
-:host #state.open {
-  background: red;
-  border: solid 2px white;
-  font-weight: bold;
-}
-
-:host #state {
+:host #concat {
   background: white;
   border: solid 2px white;
   font-weight: bold;

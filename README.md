@@ -1,4 +1,4 @@
-component-boolean-gate
+component-string-concat
 ======================
 
-A brick for Mozilla Appmaker that passes on a signal if the gate is opened
+A brick for Mozilla Appmaker that will concatenate two input strings before passing them on as a single one
