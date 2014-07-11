@@ -21,13 +21,13 @@
 }
 
 :host #state.open {
-  background: white;
+  background: red;
   border: solid 2px white;
   font-weight: bold;
 }
 
 :host #state {
-  background: red;
+  background: white;
   border: solid 2px white;
   font-weight: bold;
 }
