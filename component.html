@@ -65,9 +65,9 @@
         this.open = false;
         this.updateUI();
       },
-      input: function(value) {
+      input:function(value) {
         if ( this.open ) {
-          this.broadcast(this.nextBroadcast, value);
+          this.broadcast("Out", value);
         }
       }
     });
