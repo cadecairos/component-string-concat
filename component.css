@@ -20,12 +20,14 @@
   cursor: pointer;
 }
 
-:host .output-channel:not(.next-up):hover {
-  background: #AAA;
+:host #state.open {
+  background: white;
+  border: solid 2px white;
+  font-weight: bold;
 }
 
-:host .next-up {
-  background: white;
+:host #state {
+  background: red;
   border: solid 2px white;
   font-weight: bold;
 }

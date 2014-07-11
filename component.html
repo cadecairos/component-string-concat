@@ -1,99 +1,74 @@
-<polymer-element name="ceci-channel-gate" attributes="" extends="ceci-element">
+<polymer-element name="ceci-boolean-gate" attributes="" extends="ceci-element">
   <template>
     <link rel="stylesheet" href="component.css"></link>
-    <div id="channels"></div>
+    <div id="state">OPEN</div>
     <shadow></shadow>
   </template>
   <ceci-definition>
     {
-      "tags": ["alternating-gate", "low-level"],
+      "tags": ["boolean-gate", "low-level"],
       "thumbnail": "./thumbnail.png",
-      "name": "Channel Gate",
+      "name": "Boolean Gate",
       "description": "Chooose which channel to send a signal through.",
       "broadcasts": {
-        "A": {
-          "label": "Output A",
-          "description": "The first broadcast in the rotation.",
+        "Out": {
+          "label": "Output",
+          "description": "Broadcasts the message, if allowed",
           "default": "green"
-        },
-        "B": {
-          "label": "Output B",
-          "description": "The second broadcast in the rotation.",
-          "default": "yellow"
-        },
-        "C": {
-          "label": "Output C",
-          "description": "The third broadcast in the rotation."
-        },
-        "D": {
-          "label": "Output D",
-          "description": "The fourth broadcast in the rotation."
-        },
-        "E": {
-          "label": "Output E",
-          "description": "The fifth broadcast in the rotation."
         }
       },
       "listeners": {
         "input": {
-          "description": "The input that alternates out the broadcasts.",
+          "description": "The input that is to be broadcast",
           "label": "Input",
           "default": true
+        },
+        "open": {
+          "description": "Open the gate"
+          "label": "Open"
+        },
+        "close": {
+          "description": "Close the gate",
+          "label": "Close"
         }
       },
       "attributes": {}
     }
   </ceci-definition>
   <script>
-    Polymer('ceci-channel-gate', {
-      nextBroadcast : "",
+    Polymer('ceci-boolean-gate', {
+      open: true
       ready: function() {
         this.super();
-        this.lastBroadcast = null;
+        this.open = true;
       },
-      attached : function(){
+      attached: function(){
         var that = this;
         this.addEventListener("channelUpdated",function(){
-          this.updateChannels();
           this.updateUI();
         });
-        this.updateChannels();
-        this.nextBroadcast = this.activeBroadcasts[0];
         this.updateUI();
         this.super();
       },
-      updateUI : function(){
-        Array.prototype.forEach.call(this.$.channels.querySelectorAll(".output-channel"), function(c) {
-          c.classList.remove("next-up");
-        });
-        var selected = this.$.channels.querySelector("." + this.nextBroadcast);
-        if(selected){
-          selected.classList.add("next-up");
+      updateUI: function(){
+        if(this.open){
+          this.$.state.classList.remove("open");
+        } else {
+          this.$.state.classList.add("open");
         }
       },
-      channelClick : function(from){
-        this.nextBroadcast = from;
+      open: function() {
+        this.open = true;
         this.updateUI();
       },
-      updateChannels: function(){
-        var that = this;
-        this.activeBroadcasts = [];
-        that.$.channels.innerHTML = "";
-        Array.prototype.forEach.call(this.querySelectorAll("ceci-broadcast"), function(broadcast) {
-          that.activeBroadcasts.push(broadcast.getAttribute("from"));
-          var channel = document.createElement("div");
-          channel.classList.add("output-channel");
-          channel.classList.add(broadcast.getAttribute("from"));
-          channel.innerHTML = broadcast.getAttribute("from");
-          var from = broadcast.getAttribute("from");
-          channel.addEventListener("click",function(){
-            that.channelClick(from);
-          });
-          that.$.channels.appendChild(channel);
-        });
+      close: function() {
+        this.open = false;
+        this.updateUI();
       },
       input: function(value) {
-        this.broadcast(this.nextBroadcast, value);
+        if ( this.open ) {
+          this.broadcast(this.nextBroadcast, value);
+        }
       }
     });
   </script>
