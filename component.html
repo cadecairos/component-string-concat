@@ -37,10 +37,10 @@
   </ceci-definition>
   <script>
     Polymer('ceci-boolean-gate', {
-      open: true,
+      isOpen: true,
       ready: function() {
         this.super();
-        this.open = true;
+        this.isOpen = true;
       },
       attached: function(){
         var that = this;
@@ -51,22 +51,22 @@
         this.super();
       },
       updateUI: function(){
-        if(this.open){
+        if(this.isOpen){
           this.$.state.classList.remove("open");
         } else {
           this.$.state.classList.add("open");
         }
       },
-      open: function() {
-        this.open = true;
+      on: function() {
+        this.isOpen = true;
         this.updateUI();
       },
-      close: function() {
-        this.open = false;
+      off: function() {
+        this.isOpen = false;
         this.updateUI();
       },
       input:function(value) {
-        if ( this.open ) {
+        if ( this.isOpen ) {
           this.broadcast("Out", value);
         }
       }
